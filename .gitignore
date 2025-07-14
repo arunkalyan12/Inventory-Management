@@ -1,0 +1,17 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data and model files
+
+components/computer_vision/data/
+components/computer_vision/mlruns/
+mlruns/
+
+
+# Virtual environment
+components/computer_vision/comp_vision/
+components/inventory_management/inv_management/
+components/monitoring_tracing/monitor_trace/
+components/notification_service/motification/
