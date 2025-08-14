@@ -1,0 +1,41 @@
+# =========================================
+# Service definitions and dependencies
+# =========================================
+
+services:
+
+  computer_vision:
+    name: computer_vision
+    default_host: 0.0.0.0
+    default_port: 8000
+    api_base_path: /api/v1/cv
+    dependencies:
+      - inventory_management      # CV might notify inventory when items are recognized
+
+  inventory_management:
+    name: inventory_management
+    default_host: 0.0.0.0
+    default_port: 8001
+    api_base_path: /api/v1/inventory
+    dependencies:
+      - computer_vision           # optionally calls CV API for automated recognition
+      - notification_service      # sends alerts when stock is low
+
+  notification_service:
+    name: notification_service
+    default_host: 0.0.0.0
+    default_port: 8002
+    api_base_path: /api/v1/notifications
+    dependencies: []
+
+  monitoring_tracing:
+    name: monitoring_tracing
+    prometheus_host: localhost
+    prometheus_port: 9090
+    otel_collector_url: http://localhost:4317
+    dependencies: []
+
+  shared_utils:
+    name: shared_utils
+    description: "Logging, config loaders, message queue clients"
+    dependencies: []

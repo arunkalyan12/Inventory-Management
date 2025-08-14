@@ -19,7 +19,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY model/ ./model/
 COPY data/ ./data/
 COPY utils/ ./utils/
-COPY train_yolo.py .  # Your main training script
+COPY train.py .
+# Your main training script
 
 # MLflow tracking URI (override at runtime if needed)
 ENV MLFLOW_TRACKING_URI=http://your-mlflow-server:8080
