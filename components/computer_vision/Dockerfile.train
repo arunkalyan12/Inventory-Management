@@ -1,23 +1,31 @@
-# Use official PyTorch image with CUDA support (change CUDA version as needed)
+# Dockerfile.train
+# Use official PyTorch image with CUDA support for GPU-accelerated training
 FROM pytorch/pytorch:1.13.1-cuda11.6-cudnn8-runtime
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git wget unzip \
-    && rm -rf /var/lib/apt/lists/*
+# Install system dependencies needed for YOLO training
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git wget unzip libgl1 libglib2.0-0 && \
+    rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install python dependencies
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy your entire computer_vision code folder into the container
-COPY . .
+# Copy only relevant YOLO training code
+# (Avoid copying unnecessary files like datasets, large checkpoints, etc.)
+COPY model/ ./model/
+COPY data/ ./data/
+COPY utils/ ./utils/
+COPY train_yolo.py .  # Your main training script
 
-# Set environment variable for MLflow tracking URI
+# MLflow tracking URI (override at runtime if needed)
 ENV MLFLOW_TRACKING_URI=http://your-mlflow-server:8080
 
+# Volume for saving trained weights outside container
+VOLUME ["/app/model/weights"]
+
 # Default command to start training
-CMD ["python", "train_yolo.py"]
+CMD ["python", "train_yolo.py", "--data", "data/config.yaml", "--epochs", "50", "--img", "640"]
