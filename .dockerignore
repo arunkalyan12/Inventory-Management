@@ -1,4 +1,4 @@
-# Git
+# Version control
 .git
 .gitignore
 
@@ -8,68 +8,20 @@ __pycache__/
 *.pyo
 *.pyd
 *.egg-info/
-pip-wheel-metadata/
 
-# Data & model files (avoid baking huge datasets into the image)
-components/computer_vision/data/
-components/computer_vision/mlruns/
-components/computer_vision/model_weights.pt
-mlruns/
-*.pth
-*.onnx
-*.ckpt
-*.joblib
-*.h5
-*.tflite
-
-# Virtual environments
+# Virtual envs
 .venv/
 venv/
-components/computer_vision/comp_vision/
-components/inventory_management/inv_management/
-components/monitoring_tracing/monitor_trace/
-components/notification_service/motification/
 
-# Node / React
+# Node / React dependencies
 node_modules/
-build/
-dist/
 
 # Logs / Temp files
 *.log
 logs/
 tmp/
 temp/
-*.pid
 
-# Test & coverage
-htmlcov/
-.coverage
-coverage.xml
-.pytest_cache/
-junit.xml
-tests/
-
-# Docker & Compose overrides
-docker-compose.override.yml
-.docker/
-
-# CI/CD build artifacts
-build-artifacts/
-coverage-report/
-
-# IDE / Editor configs
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS generated
+# OS generated files
 .DS_Store
 Thumbs.db
-
-# Misc
-.env
-.env.*
-README.md
-docs/
