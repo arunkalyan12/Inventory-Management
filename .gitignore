@@ -1,17 +1,77 @@
 # Python cache files
 __pycache__/
 *.py[cod]
-*$py.class
+*.pyo
+*.pyd
+*.egg-info/
+.env
+.venv/
+venv/
+pip-wheel-metadata/
 
 # Data and model files
-
 components/computer_vision/data/
 components/computer_vision/mlruns/
+components/computer_vision/model_weights.pt
 mlruns/
-
+*.pth
+*.onnx
+*.ckpt
+*.joblib   # scikit-learn serialized models
+*.h5       # Keras/TensorFlow models
+*.tflite   # TensorFlow Lite models
 
 # Virtual environment
 components/computer_vision/comp_vision/
 components/inventory_management/inv_management/
 components/monitoring_tracing/monitor_trace/
 components/notification_service/motification/
+
+# Node / React
+node_modules/
+build/
+dist/
+
+# Logs / Temp
+*.log
+logs/
+tmp/
+temp/
+*.pid       # process ID files
+
+# Coverage / Reports
+htmlcov/
+.coverage
+coverage.xml
+.pytest_cache/
+junit.xml
+
+# Docker
+**/Dockerfile~
+**/.dockerignore
+docker-compose.override.yml
+.docker/
+
+# CI/CD
+**/build-artifacts/
+**/coverage-report/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated
+.DS_Store
+Thumbs.db
+
+# Project docs & structure exports
+folder_structure.md
+*.drawio        # diagrams from Draw.io
+*.plantuml      # PlantUML diagrams
+*.mermaid       # Mermaid diagrams
+docs/generated/ # any auto-generated docs
+
+# Misc
+.env.*
