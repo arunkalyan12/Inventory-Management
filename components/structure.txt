@@ -1,0 +1,502 @@
+Folder PATH listing
+Volume serial number is D44A-31F7
+C:.
++---computer_vision
+|   +---api
+|   +---comp_vision
+|   |   +---Include
+|   |   +---Lib
+|   |   |   \---site-packages
+|   |   |       +---pathlib-1.0.1.dist-info
+|   |   |       +---PIL
+|   |   |       |   \---__pycache__
+|   |   |       +---pillow-11.3.0.dist-info
+|   |   |       |   \---licenses
+|   |   |       +---pip
+|   |   |       |   +---_internal
+|   |   |       |   |   +---cli
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---commands
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---distributions
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---index
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---locations
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---metadata
+|   |   |       |   |   |   +---importlib
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---models
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---network
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---operations
+|   |   |       |   |   |   +---build
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---install
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---req
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---resolution
+|   |   |       |   |   |   +---legacy
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---resolvelib
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---utils
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---vcs
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   \---__pycache__
+|   |   |       |   +---_vendor
+|   |   |       |   |   +---cachecontrol
+|   |   |       |   |   |   +---caches
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---certifi
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---distlib
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---distro
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---idna
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---msgpack
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---packaging
+|   |   |       |   |   |   +---licenses
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---pkg_resources
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---platformdirs
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---pygments
+|   |   |       |   |   |   +---filters
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---formatters
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---lexers
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---styles
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---pyproject_hooks
+|   |   |       |   |   |   +---_in_process
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---requests
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---resolvelib
+|   |   |       |   |   |   +---compat
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---rich
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---tomli
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---truststore
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   +---urllib3
+|   |   |       |   |   |   +---contrib
+|   |   |       |   |   |   |   +---_securetransport
+|   |   |       |   |   |   |   |   \---__pycache__
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---packages
+|   |   |       |   |   |   |   +---backports
+|   |   |       |   |   |   |   |   \---__pycache__
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   +---util
+|   |   |       |   |   |   |   \---__pycache__
+|   |   |       |   |   |   \---__pycache__
+|   |   |       |   |   \---__pycache__
+|   |   |       |   \---__pycache__
+|   |   |       +---pip-25.0.1.dist-info
+|   |   |       +---shared_utils-0.1.0.dist-info
+|   |   |       \---__pycache__
+|   |   \---Scripts
+|   +---data
+|   |   +---images
+|   |   +---labels
+|   |   \---Raw Data
+|   |       +---test
+|   |       |   +---Apple_Banana_Orange_Strawberry_Pineapple
+|   |       |   |   \---Label
+|   |       |   +---Bell pepper_Radish_Mushroom_Chicken_Turkey
+|   |       |   |   \---Label
+|   |       |   +---Cake_Cookie_Pasta_Pizza_Hot dog
+|   |       |   |   \---Label
+|   |       |   +---Cheese_Bread_Croissant_Bagel_Doughnut
+|   |       |   |   \---Label
+|   |       |   +---Cucumber_Broccoli_Cabbage_Pumpkin_Zucchini
+|   |       |   |   \---Label
+|   |       |   +---Fish_Seafood_Shrimp_Egg_Milk
+|   |       |   |   \---Label
+|   |       |   +---Ice cream_Candy_Coffee_Tea_Juice
+|   |       |   |   \---Label
+|   |       |   +---Mango_Watermelon_Grapefruit_Lemon_Grape
+|   |       |   |   \---Label
+|   |       |   +---Pear_Peach_Tomato_Potato_Carrot
+|   |       |   |   \---Label
+|   |       |   \---Sandwich_Bottle_Bowl_Food_Snack
+|   |       |       \---Label
+|   |       \---train
+|   |           +---Apple_Banana_Orange_Strawberry_Pineapple
+|   |           |   \---Label
+|   |           +---Bell pepper_Radish_Mushroom_Chicken_Turkey
+|   |           |   \---Label
+|   |           +---Cake_Cookie_Pasta_Pizza_Hot dog
+|   |           |   \---Label
+|   |           +---Cheese_Bread_Croissant_Bagel_Doughnut
+|   |           |   \---Label
+|   |           +---Cucumber_Broccoli_Cabbage_Pumpkin_Zucchini
+|   |           |   \---Label
+|   |           +---Fish_Seafood_Shrimp_Egg_Milk
+|   |           |   \---Label
+|   |           +---Ice cream_Candy_Coffee_Tea_Juice
+|   |           |   \---Label
+|   |           +---Mango_Watermelon_Grapefruit_Lemon_Grape
+|   |           |   \---Label
+|   |           +---Pear_Peach_Tomato_Potato_Carrot
+|   |           |   \---Label
+|   |           \---Sandwich_Bottle_Bowl_Food_Snack
+|   |               \---Label
+|   +---mlruns
+|   +---model
+|   \---utils
++---inventory_management
+|   \---inv_management
+|       +---Include
+|       +---Lib
+|       |   \---site-packages
+|       |       +---pip
+|       |       |   +---_internal
+|       |       |   |   +---cli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---commands
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distributions
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---index
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---locations
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---metadata
+|       |       |   |   |   +---importlib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---models
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---network
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---operations
+|       |       |   |   |   +---build
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---install
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---req
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolution
+|       |       |   |   |   +---legacy
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---resolvelib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---utils
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---vcs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   +---_vendor
+|       |       |   |   +---cachecontrol
+|       |       |   |   |   +---caches
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---certifi
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distlib
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distro
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---idna
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---msgpack
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---packaging
+|       |       |   |   |   +---licenses
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pkg_resources
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---platformdirs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pygments
+|       |       |   |   |   +---filters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---formatters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---lexers
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---styles
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pyproject_hooks
+|       |       |   |   |   +---_in_process
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---requests
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolvelib
+|       |       |   |   |   +---compat
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---rich
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---tomli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---truststore
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---urllib3
+|       |       |   |   |   +---contrib
+|       |       |   |   |   |   +---_securetransport
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---packages
+|       |       |   |   |   |   +---backports
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---util
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   \---__pycache__
+|       |       \---pip-25.0.1.dist-info
+|       \---Scripts
++---monitoring_tracing
+|   \---monitor_trace
+|       +---Include
+|       +---Lib
+|       |   \---site-packages
+|       |       +---pip
+|       |       |   +---_internal
+|       |       |   |   +---cli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---commands
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distributions
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---index
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---locations
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---metadata
+|       |       |   |   |   +---importlib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---models
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---network
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---operations
+|       |       |   |   |   +---build
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---install
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---req
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolution
+|       |       |   |   |   +---legacy
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---resolvelib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---utils
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---vcs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   +---_vendor
+|       |       |   |   +---cachecontrol
+|       |       |   |   |   +---caches
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---certifi
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distlib
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distro
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---idna
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---msgpack
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---packaging
+|       |       |   |   |   +---licenses
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pkg_resources
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---platformdirs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pygments
+|       |       |   |   |   +---filters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---formatters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---lexers
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---styles
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pyproject_hooks
+|       |       |   |   |   +---_in_process
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---requests
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolvelib
+|       |       |   |   |   +---compat
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---rich
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---tomli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---truststore
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---urllib3
+|       |       |   |   |   +---contrib
+|       |       |   |   |   |   +---_securetransport
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---packages
+|       |       |   |   |   |   +---backports
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---util
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   \---__pycache__
+|       |       \---pip-25.0.1.dist-info
+|       \---Scripts
++---notification_service
+|   \---motification
+|       +---Include
+|       +---Lib
+|       |   \---site-packages
+|       |       +---pip
+|       |       |   +---_internal
+|       |       |   |   +---cli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---commands
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distributions
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---index
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---locations
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---metadata
+|       |       |   |   |   +---importlib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---models
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---network
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---operations
+|       |       |   |   |   +---build
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---install
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---req
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolution
+|       |       |   |   |   +---legacy
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---resolvelib
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---utils
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---vcs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   +---_vendor
+|       |       |   |   +---cachecontrol
+|       |       |   |   |   +---caches
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---certifi
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distlib
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---distro
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---idna
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---msgpack
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---packaging
+|       |       |   |   |   +---licenses
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pkg_resources
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---platformdirs
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pygments
+|       |       |   |   |   +---filters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---formatters
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---lexers
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---styles
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---pyproject_hooks
+|       |       |   |   |   +---_in_process
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---requests
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---resolvelib
+|       |       |   |   |   +---compat
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---rich
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---tomli
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---truststore
+|       |       |   |   |   \---__pycache__
+|       |       |   |   +---urllib3
+|       |       |   |   |   +---contrib
+|       |       |   |   |   |   +---_securetransport
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---packages
+|       |       |   |   |   |   +---backports
+|       |       |   |   |   |   |   \---__pycache__
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   +---util
+|       |       |   |   |   |   \---__pycache__
+|       |       |   |   |   \---__pycache__
+|       |       |   |   \---__pycache__
+|       |       |   \---__pycache__
+|       |       \---pip-25.0.1.dist-info
+|       \---Scripts
+\---shared_utils
+    \---shared_utils
+        +---config
+        +---logging
+        +---message_queue
+        \---shared_utils.egg-info

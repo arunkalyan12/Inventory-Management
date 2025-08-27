@@ -1,0 +1,26 @@
+Folder PATH listing
+Volume serial number is D44A-31F7
+C:.
+|   pyproject.toml
+|   structure.txt
+|   
+\---shared_utils
+    |   structure.txt
+    |   __init__.py
+    |   
+    +---config
+    |       config_loader.py
+    |       path.py
+    |       __init__.py
+    |       
+    +---logging
+    |       logger.py
+    |       __init__.py
+    |       
+    +---message_queue
+    \---shared_utils.egg-info
+            dependency_links.txt
+            PKG-INFO
+            SOURCES.txt
+            top_level.txt
+            
