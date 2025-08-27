@@ -1,5 +1,8 @@
-from ..db.mongo_queries import (get_item_by_id, get_items_by_category,
-                                list_items)
+from components.inventory_management.db.mongo_queries import (
+    get_item_by_id,
+    get_items_by_category,
+    list_items,
+)
 
 
 def get_item(item_id: str):
