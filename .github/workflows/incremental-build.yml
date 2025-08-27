@@ -74,12 +74,12 @@ jobs:
           if [ "${{ steps.filter.outputs.shared_utils }}" = "true" ]; then services+=("shared_utils"); fi
 
           if [ ${#services[@]} -eq 0 ]; then
-            echo "matrix={\"service\":[]}" >> $GITHUB_OUTPUT
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo 'matrix={"service":[]}' >> "$GITHUB_OUTPUT"
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
             json=$(printf '%s\n' "${services[@]}" | jq -R . | jq -s .)
-            echo "matrix={\"service\":$json}" >> $GITHUB_OUTPUT
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "matrix={\"service\":$json}" >> "$GITHUB_OUTPUT"
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
 
   # ------------------------------
