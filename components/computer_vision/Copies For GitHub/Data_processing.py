@@ -1,23 +1,29 @@
 import os
 import shutil
+
 from PIL import Image
-from shared_utils.config.path import RAW_DATA_DIR, FINAL_DATA_DIR
+from shared_utils.config.path import FINAL_DATA_DIR, RAW_DATA_DIR
 
 # ========================
 # CONFIG
 # ========================
-RAW_DATA = RAW_DATA_DIR      # raw OID data ("Raw Data")
+RAW_DATA = RAW_DATA_DIR  # raw OID data ("Raw Data")
 OUTPUT_DIR = FINAL_DATA_DIR  # Final Data will act as YOLO-ready dataset
 CLASSES_FILE = FINAL_DATA_DIR / "classes.txt"
-SPLITS = ["train", "test"]   # OIDv4: test -> val
+SPLITS = ["train", "test"]  # OIDv4: test -> val
+
 
 def load_classes(classes_file):
     if not classes_file.exists():
         raise FileNotFoundError(f"❌ classes.txt not found at {classes_file}")
-    return [line.strip() for line in classes_file.read_text().splitlines() if line.strip()]
+    return [
+        line.strip() for line in classes_file.read_text().splitlines() if line.strip()
+    ]
+
 
 def build_class_mapping(classes):
     return {cls: i for i, cls in enumerate(classes)}
+
 
 def convert_label(label_path, image_path, class_mapping):
     yolo_lines = []
@@ -44,9 +50,12 @@ def convert_label(label_path, image_path, class_mapping):
         width = (x_max - x_min) / img_w
         height = (y_max - y_min) / img_h
 
-        yolo_lines.append(f"{cls_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}")
+        yolo_lines.append(
+            f"{cls_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}"
+        )
 
     return yolo_lines
+
 
 def process_dataset(raw_data, output_dir, class_mapping):
     for split in SPLITS:
@@ -79,7 +88,9 @@ def process_dataset(raw_data, output_dir, class_mapping):
 
                     shutil.copy(img_path, img_out_dir / file)
 
-                    with open(lbl_out_dir / f"{os.path.splitext(file)[0]}.txt", "w") as f:
+                    with open(
+                        lbl_out_dir / f"{os.path.splitext(file)[0]}.txt", "w"
+                    ) as f:
                         f.write("\n".join(yolo_labels))
 
     print(f"✅ Dataset converted to YOLO format at: {output_dir}")

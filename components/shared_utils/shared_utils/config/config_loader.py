@@ -1,8 +1,10 @@
 # shared_utils/config/config_loader.py
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+
 import yaml
+from dotenv import load_dotenv
+
 
 class ConfigLoader:
     """
@@ -24,7 +26,9 @@ class ConfigLoader:
             if env_path.exists():
                 load_dotenv(dotenv_path=env_path)
             else:
-                print(f"[ConfigLoader] Warning: {env_file} not found. Using system env variables.")
+                print(
+                    f"[ConfigLoader] Warning: {env_file} not found. Using system env variables."
+                )
 
         # Load services YAML if provided
         self.services_config = {}

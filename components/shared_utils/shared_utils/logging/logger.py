@@ -3,6 +3,7 @@ import logging
 import sys
 from pathlib import Path
 
+
 def get_logger(service_name: str, log_file: str = None):
     """
     Creates and returns a logger with a consistent format.
@@ -24,8 +25,8 @@ def get_logger(service_name: str, log_file: str = None):
 
     # Formatter: clear and easy to read
     formatter = logging.Formatter(
-        fmt='[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s',
-        datefmt='%Y-%m-%d %H:%M:%S'
+        fmt="[%(asctime)s] [%(name)s] [%(levelname)s] %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
     )
 
     # Console handler

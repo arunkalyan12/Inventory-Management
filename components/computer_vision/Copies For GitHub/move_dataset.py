@@ -9,7 +9,7 @@ target_path = r"C:\Users\arunm\Documents\Projects\Inventory-Management\component
 os.makedirs(target_path, exist_ok=True)
 
 # Folders to move
-folders_to_move = ['train', 'test']
+folders_to_move = ["train", "test"]
 
 for folder in folders_to_move:
     src_folder = os.path.join(source_path, folder)
