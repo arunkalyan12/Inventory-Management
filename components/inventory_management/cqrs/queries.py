@@ -1,4 +1,6 @@
-from ..db.mongo_queries import get_item_by_id, list_items, get_items_by_category
+from ..db.mongo_queries import (get_item_by_id, get_items_by_category,
+                                list_items)
+
 
 def get_item(item_id: str):
     return get_item_by_id(item_id)

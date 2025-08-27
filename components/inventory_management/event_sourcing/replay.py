@@ -1,9 +1,11 @@
-from ..db.mongo_queries import insert_item, update_item, delete_item, update_quantity
-from pymongo import MongoClient
-from bson.objectid import ObjectId
 from shared_utils.config.config_loader import ConfigLoader
 
-config_loader = ConfigLoader(services_file=r"../../shared_utils/shared_utils/config/inventory_config.yaml")
+from ..db.mongo_queries import (delete_item, insert_item, update_item,
+                                update_quantity)
+
+config_loader = ConfigLoader(
+    services_file=r"../../shared_utils/shared_utils/config/inventory_config.yaml"
+)
 
 # Access inventory management config
 im_config = config_loader.get_service("inventory_management")
@@ -13,6 +15,7 @@ db = im_config.get("mongodb", {}).get("db_name")
 
 events_collection = db["events"]
 
+
 def apply_event(event):
     """Apply a single event to the inventory"""
     event_type = event["type"]
@@ -21,7 +24,7 @@ def apply_event(event):
     if event_type == "ItemCreated":
         # Avoid duplicates if already exists
         item_id = payload.get("item_id")
-        if not insert_item(payload):
+        if not insert_item(item_id):
             insert_item(payload)
 
     elif event_type == "ItemUpdated":

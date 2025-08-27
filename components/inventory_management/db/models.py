@@ -1,6 +1,8 @@
-from pydantic import BaseModel, Field
 from datetime import datetime, timezone
-from typing import  Optional
+from typing import Optional
+
+from pydantic import BaseModel, Field
+
 
 class InventoryItem(BaseModel):
     id: Optional[str] = Field(None, alias="id")
@@ -16,6 +18,7 @@ class InventoryItem(BaseModel):
         if "id" in data and data["id"] is None:
             del data["id"]
         return data
+
 
 class Category(BaseModel):
     id: Optional[str] = Field(None, alias="id")

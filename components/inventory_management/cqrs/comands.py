@@ -1,12 +1,15 @@
-from ..db.mongo_queries import (
-    insert_item, update_item, delete_item, update_quantity
-)
-from ..event_sourcing.events import record_event
-from ..db.models import InventoryItem
 from typing import Dict
+
 from shared_utils.config.config_loader import ConfigLoader
 
-config_loader = ConfigLoader(services_file=r"../../shared_utils/shared_utils/config/inventory_config.yaml")
+from ..db.models import InventoryItem
+from ..db.mongo_queries import (delete_item, insert_item, update_item,
+                                update_quantity)
+from ..event_sourcing.events import record_event
+
+config_loader = ConfigLoader(
+    services_file=r"../../shared_utils/shared_utils/config/inventory_config.yaml"
+)
 
 
 def create_item(item_data: Dict) -> str:
