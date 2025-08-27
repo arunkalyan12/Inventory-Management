@@ -67,21 +67,24 @@ jobs:
         id: set-matrix
         run: |
           services=()
-          [[ "${{ steps.filter.outputs.computer_vision }}" == "true" ]] && services+=("computer_vision")
-          [[ "${{ steps.filter.outputs.inventory_management }}" == "true" ]] && services+=("inventory_management")
-          [[ "${{ steps.filter.outputs.notification_service }}" == "true" ]] && services+=("notification_service")
-          [[ "${{ steps.filter.outputs.monitoring_tracing }}" == "true" ]] && services+=("monitoring_tracing")
-          [[ "${{ steps.filter.outputs.shared_utils }}" == "true" ]] && services+=("shared_utils")
+          [ [ "false" == "true" ] ] && services+=("computer_vision")
+          [[ "true" == "true" ]] && services+=("inventory_management")
+          [[ "false" == "true" ]] && services+=("notification_service")
+          [[ "false" == "true" ]] && services+=("monitoring_tracing")
+          [[ "false" == "true" ]] && services+=("shared_utils")
 
           if [ ${#services[@]} -eq 0 ]; then
             echo "matrix={\"service\":[]}" >> $GITHUB_OUTPUT
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             # Join array items with commas and wrap in quotes to make valid JSON
-            json="[\"$(IFS=\",\"; echo "${services[*]}")\"]"
+            IFS=',' read -r -a quoted_services <<< "$(printf '%s\n' "${services[@]}" | sed 's/.*/"&"/')"
+            json="[${quoted_services[*]}]"
             echo "matrix={\"service\":$json}" >> $GITHUB_OUTPUT
             echo "has_changes=true" >> $GITHUB_OUTPUT
-  
+          fi
+
+
 
   # ------------------------------
   # 3. Build, Test & Push Docker images
