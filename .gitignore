@@ -12,7 +12,9 @@ pip-wheel-metadata/
 # Data and model files
 components/computer_vision/data/
 components/computer_vision/mlruns/
-components/computer_vision/model_weights.pt
+components/computer_vision/mlartifacts/
+components/computer_vision/model/runs/
+components/computer_vision/model/*.pt
 mlruns/
 *.pth
 *.onnx
@@ -72,6 +74,10 @@ folder_structure.md
 *.plantuml      # PlantUML diagrams
 *.mermaid       # Mermaid diagrams
 docs/generated/ # any auto-generated docs
+
+# Jupyter notebooks and checkpoints
+*.ipynb
+*.ipynb_checkpoints/
 
 # Misc
 .env.*
