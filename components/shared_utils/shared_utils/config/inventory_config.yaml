@@ -6,14 +6,6 @@ inventory_management:
     host: 0.0.0.0
     port: 8001
 
-  mongodb:
-    uri: mongodb://localhost:27017
-    db_name: inventory_db
-    collections:
-      items: items
-      categories: categories
-      locations: locations
-
   logging:
     level: DEBUG
     log_file_path: logs/inventory.log

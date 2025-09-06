@@ -1,0 +1,60 @@
+# Dataset root directory
+path: C:\Users\arunm\Documents\Projects\Inventory-Management\components\computer_vision\data\Final Data
+
+# Train/val/test sets: specify directories, *.txt files, or lists
+train: images/train # images for training
+val: images/val # images for validation
+test: images/test # path to test images
+
+# Classes
+names:
+  0: Apple
+  1: Banana
+  2: Orange
+  3: Strawberry
+  4: Pineapple
+  5: Mango
+  6: Watermelon
+  7: Grapefruit
+  8: Lemon
+  9: Grape
+  10: Pear
+  11: Peach
+  12: Tomato
+  13: Potato
+  14: Carrot
+  15: Cucumber
+  16: Broccoli
+  17: Cabbage
+  18: Pumpkin
+  19: Zucchini
+  20: Bell pepper
+  21: Radish
+  22: Mushroom
+  23: Chicken
+  24: Turkey
+  25: Fish
+  26: Seafood
+  27: Shrimp
+  28: Egg
+  29: Milk
+  30: Cheese
+  31: Bread
+  32: Croissant
+  33: Bagel
+  34: Doughnut
+  35: Cake3
+  36: Cookie
+  37: Pasta
+  38: Pizza
+  39: Hot dog
+  40: Sandwich
+  41: Bottle
+  42: Bowl
+  43: Food
+  44: Snack
+  45: Ice cream
+  46: Candy
+  47: Coffee
+  48: Tea
+  49: Juice

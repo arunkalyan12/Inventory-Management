@@ -1,27 +1,26 @@
 # shared_utils/logging/logger.py
 import logging
 import sys
+import os
 from pathlib import Path
 
 
-def get_logger(service_name: str, log_file: str = None):
+def get_logger(service_name: str):
     """
     Creates and returns a logger with a consistent format.
-
-    Args:
-        service_name (str): Name of the service (e.g., "computer_vision")
-        log_file (str, optional): Path to log file. If None, logs only to console.
-
-    Returns:
-        logging.Logger: Configured logger
+    - Dev/Test: logs to console + ./logs/{service_name}.log
+    - Prod: logs only to console (Kubernetes handles aggregation)
     """
 
     logger = logging.getLogger(service_name)
-    logger.setLevel(logging.DEBUG)  # Can be overridden via env variable
+    logger.setLevel(logging.DEBUG)
 
-    # Prevent adding multiple handlers if logger already configured
+    # Prevent duplicate handlers
     if logger.hasHandlers():
         logger.handlers.clear()
+
+    # Which environment?
+    env = os.getenv("APP_ENV", "dev").lower()
 
     # Formatter: clear and easy to read
     formatter = logging.Formatter(
@@ -29,14 +28,15 @@ def get_logger(service_name: str, log_file: str = None):
         datefmt="%Y-%m-%d %H:%M:%S",
     )
 
-    # Console handler
+    # Console handler (always on)
     console_handler = logging.StreamHandler(sys.stdout)
     console_handler.setLevel(logging.DEBUG)
     console_handler.setFormatter(formatter)
     logger.addHandler(console_handler)
 
-    # Optional file handler
-    if log_file:
+    # File handler (only for dev/test)
+    if env in ("dev", "test"):
+        log_file = f"./logs/{service_name}.log"
         log_path = Path(log_file)
         log_path.parent.mkdir(parents=True, exist_ok=True)
         file_handler = logging.FileHandler(log_file)

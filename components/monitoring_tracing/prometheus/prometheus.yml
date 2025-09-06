@@ -1,0 +1,40 @@
+global:
+  scrape_interval: 15s   # How often to scrape targets
+  evaluation_interval: 15s  # How often to evaluate rules
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []   # Fill with Alertmanager service if used
+
+rule_files:
+  - "alerts.yml"         # Optional: alert rules file
+
+scrape_configs:
+  # --- Scrape Prometheus itself ---
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  # --- Scrape Computer Vision service ---
+  - job_name: "computer_vision"
+    static_configs:
+      - targets: ["computer-vision:8000"]   # K8s service name + port
+    metrics_path: /metrics
+
+  # --- Scrape Inventory Management service ---
+  - job_name: "inventory_management"
+    static_configs:
+      - targets: ["inventory-management:8000"]
+    metrics_path: /metrics
+
+  # --- Scrape Notification Service ---
+  - job_name: "notification_service"
+    static_configs:
+      - targets: ["notification-service:8000"]
+    metrics_path: /metrics
+
+  # --- Scrape Monitoring/Tracing exporters ---
+  - job_name: "custom_exporters"
+    static_configs:
+      - targets: ["exporter-service:9100"]   # Example exporter

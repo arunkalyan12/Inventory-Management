@@ -1,0 +1,15 @@
+mongodb:
+  uri: "mongodb://mongo:27017"   # Service name in Kubernetes or "localhost" in dev
+  db_name: "inventory_db"        # Main database name
+  username: "inventory_user"      # Created via init script or secret
+  password: "supersecret"         # ⚠️ In real setups, this comes from a secret, not plain text
+  authSource: "admin"             # Auth DB (often "admin" for root, or same as `database`)
+  replicaSet: ""                  # Leave empty if not using replica sets
+  ssl: false                      # Enable true if using TLS
+  maxPoolSize: 50                 # Connection pool size for performance
+  minPoolSize: 5                  # Keep a few warm connections
+  serverSelectionTimeoutMS: 5000  # Fail fast if server is unreachable
+  collections:
+    items: "items"
+    categories: "categories"
+    locations: "locations"

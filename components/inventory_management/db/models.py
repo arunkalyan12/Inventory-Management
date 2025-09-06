@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 class InventoryItem(BaseModel):
     id: Optional[str] = Field(None, alias="id")
     name: str
-    catefory_id: str
+    category_id: str
     location_id: str
     quantity: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
