@@ -50,7 +50,7 @@ def log_trained_model_metrics(
 
 if __name__ == "__main__":
     dataset_yaml = "../../shared_utils/shared_utils/config/dataset.yaml"
-    trained_model_path = "runs/train/exp_yolov8_cuda2/weights/last.pt"
+    trained_model_path = "runs/train/exp_yolov8_cuda2/weights/best.pt"
 
     log_trained_model_metrics(
         model_path=trained_model_path,
@@ -58,5 +58,5 @@ if __name__ == "__main__":
         project_dir="runs/train",
         exp_name="exp_yolov8_cuda2",
         experiment_name="YOLOv8_Training",
-        run_name="log_metrics_only",
+        run_name="best_log_metrics_only",
     )
