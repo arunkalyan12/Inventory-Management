@@ -1,8 +1,8 @@
 import pytest
 from pymongo import MongoClient
 
-from ...components.inventory_management.db import mongo_queries as mq
-from ...components.inventory_management.db.models import (
+from components.inventory_management.db import mongo_queries as mq
+from components.inventory_management.db.models import (
     InventoryItem,
     Category,
     Location,
@@ -61,7 +61,7 @@ def test_update_tem(test_db):
     item_id = mq.insert_item(item)
 
     updated = mq.update_item(item_id, {"name": "UodatedWidget"})
-    assert updated.name == "UpdatedWidget"
+    assert updated.name == "UodatedWidget"
 
 
 def test_update_quantity(test_db):
