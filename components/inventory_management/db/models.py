@@ -1,4 +1,3 @@
-# models.py
 from datetime import datetime, timezone
 from typing import Optional
 from pydantic import BaseModel, Field
@@ -6,9 +5,10 @@ from pydantic import BaseModel, Field
 
 class InventoryItem(BaseModel):
     id: Optional[str] = Field(None, alias="id")
+    user_id: str  # NEW: associate each item with a user
     name: str
-    category_id: str
-    location_id: str
+    category_id: Optional[str] = None
+    location_id: Optional[str] = None
     quantity: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))

@@ -1,8 +1,11 @@
-import { useState } from "react";
+// src/pages/LoginForm.js
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../services/api.js";
+import { AuthContext } from "../../context/AuthContext";
+import { login as apiLogin } from "../../services/api.js"; // Adjust the import path as needed
 
 export default function LoginForm() {
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -11,9 +14,13 @@ export default function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await login(email, password);
+      const result = await apiLogin(email, password);
       console.log("Logged in:", result);
-      navigate("/dashboard"); // or wherever you want after login
+
+      // Assuming result contains { token, user }
+      login(result.token, result.user);
+
+      navigate("/dashboard"); // Redirect after successful login
     } catch (err) {
       setError(err.response?.data?.detail || "Login failed");
     }

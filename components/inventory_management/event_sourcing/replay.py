@@ -1,48 +1,40 @@
+# components/inventory_management/event_sourcing/replay.py
 import os
-from shared_utils.config.config_loader import ConfigLoader
-from shared_utils.logging.logger import get_logger
 from pymongo import MongoClient
+from shared_utils.logging.logger import get_logger
 from components.inventory_management.db.mongo_queries import (
     delete_item,
     insert_item,
     update_item,
     update_quantity,
 )
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load dev.env from repo root
+load_dotenv(dotenv_path=Path(__file__).resolve().parents[3] / "dev.env")
 
 logger = get_logger("replay")
 
-# Load environment file first (defaults to dev)
-env_file = os.getenv("ENV_FILE", "../../config/environments/dev.env")
-config_loader = ConfigLoader(env_file=env_file)
+# -------------------- MongoDB Connection from dev.env --------------------
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = int(os.getenv("DB_PORT", 27017))
+DB_NAME = os.getenv("DB_NAME", "inventory_db")
+DB_USER = os.getenv("DB_USER", "")
+DB_PASS = os.getenv("DB_PASS", "")
 
-# Each .env sets MONGO_CONFIG path
-mongo_config_file = os.getenv("MONGO_CONFIG", "../../config/database/mongo_config.yml")
+if DB_USER and DB_PASS:
+    MONGO_URI = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}"
+else:
+    MONGO_URI = f"mongodb://{DB_HOST}:{DB_PORT}"
 
-# Load mongo config
-mongo_loader = ConfigLoader(services_file=mongo_config_file)
-full_config = mongo_loader.services_config
-mongo_config = full_config.get("mongodb", {})
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
 
-MONGO_URI = mongo_config.get("uri")
-MONGO_DB = mongo_config.get("db_name")
-COLLECTIONS = mongo_config.get("collections", {})
-
-# Connect to MongoDB
-client = MongoClient(
-    MONGO_URI,
-    username=mongo_config.get("username"),
-    password=mongo_config.get("password"),
-    authSource=mongo_config.get("authSource", "admin"),
-    maxPoolSize=mongo_config.get("maxPoolSize", 50),
-    minPoolSize=mongo_config.get("minPoolSize", 5),
-    serverSelectionTimeoutMS=mongo_config.get("serverSelectionTimeoutMS", 5000),
-    ssl=mongo_config.get("ssl", False),
-)
-
-db = client[MONGO_DB]
-events_collection = db["events"]
+events_collection = db["events"]  # default collection name
 
 
+# -------------------- Event Replay Functions --------------------
 def apply_event(event: dict) -> None:
     """Apply a single event to the inventory with logging."""
     event_type = event["type"]
@@ -52,8 +44,7 @@ def apply_event(event: dict) -> None:
         logger.debug(f"Applying event {event_type} with payload: {payload}")
 
         if event_type == "ItemCreated":
-            if not insert_item(payload):
-                insert_item(payload)
+            insert_item(payload)
             logger.info(f"ItemCreated applied for item_id: {payload.get('item_id')}")
 
         elif event_type == "ItemUpdated":

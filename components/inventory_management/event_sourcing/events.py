@@ -2,39 +2,31 @@ import os
 from datetime import datetime
 from typing import Dict
 from pymongo import MongoClient
-from shared_utils.config.config_loader import ConfigLoader
 from shared_utils.logging.logger import get_logger
+from dotenv import load_dotenv
+from pathlib import Path
+
+# Load dev.env from repo root
+load_dotenv(dotenv_path=Path(__file__).resolve().parents[3] / "dev.env")
 
 logger = get_logger("events")
 
-# Load environment file first (default to dev)
-env_file = os.getenv("ENV_FILE", "../../config/environments/dev.env")
-config_loader = ConfigLoader(env_file=env_file)
+# -------------------- MongoDB Connection from dev.env --------------------
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DB_PORT = int(os.getenv("DB_PORT", 27017))
+DB_NAME = os.getenv("DB_NAME", "inventory_db")
+DB_USER = os.getenv("DB_USER", "")
+DB_PASS = os.getenv("DB_PASS", "")
 
-# Load Mongo config (path can be overridden via ENV variable)
-mongo_config_file = os.getenv("MONGO_CONFIG", "../../config/database/mongo_config.yml")
-mongo_loader = ConfigLoader(services_file=mongo_config_file)
+if DB_USER and DB_PASS:
+    MONGO_URI = f"mongodb://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}"
+else:
+    MONGO_URI = f"mongodb://{DB_HOST}:{DB_PORT}"
 
-mongo_config = mongo_loader.services_config.get("mongodb", {})
+client = MongoClient(MONGO_URI)
+db = client[DB_NAME]
 
-MONGO_URI = mongo_config.get("uri")
-MONGO_DB = mongo_config.get("db_name")
-COLLECTIONS = mongo_config.get("collections", {})
-
-# Connect to MongoDB
-client = MongoClient(
-    MONGO_URI,
-    username=mongo_config.get("username"),
-    password=mongo_config.get("password"),
-    authSource=mongo_config.get("authSource", "admin"),
-    maxPoolSize=mongo_config.get("maxPoolSize", 50),
-    minPoolSize=mongo_config.get("minPoolSize", 5),
-    serverSelectionTimeoutMS=mongo_config.get("serverSelectionTimeoutMS", 5000),
-    ssl=mongo_config.get("ssl", False),
-)
-db = client[MONGO_DB]
-
-events_collection = db.get(COLLECTIONS.get("events", "events"))
+events_collection = db.get("events")  # default collection name
 
 
 def record_event(event_type: str, payload: Dict):

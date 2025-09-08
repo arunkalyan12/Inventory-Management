@@ -1,6 +1,7 @@
 from typing import Dict
 from shared_utils.config.config_loader import ConfigLoader
 from shared_utils.logging.logger import get_logger
+from pathlib import Path
 
 from components.inventory_management.db.models import (
     InventoryItem,
@@ -22,9 +23,10 @@ from components.inventory_management.event_sourcing.events import record_event
 
 logger = get_logger("commands")
 
-config_loader = ConfigLoader(
-    services_file=r"../../shared_utils/shared_utils/config/inventory_config.yaml"
+config_path = (
+    Path(__file__).resolve().parents[3] / "shared_utils/config/inventory_config.yaml"
 )
+config_loader = ConfigLoader(services_file=str(config_path))
 
 # ------------------- Inventory Commands -------------------
 

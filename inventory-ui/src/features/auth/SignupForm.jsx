@@ -13,6 +13,10 @@ export default function SignupForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!fullName.trim()) {
+      setError("Full name is required!");
+      return;
+    }
     if (password !== confirmPassword) {
       setError("Passwords do not match!");
       return;
@@ -21,9 +25,16 @@ export default function SignupForm() {
       const result = await signup(fullName, email, password);
       setMessage(result.message || "Signup successful!");
       setError("");
-      navigate("/login"); // Redirect to login after signup
+      // Optionally clear the form
+      setFullName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+      // Redirect to login after a short delay
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
       setError(err.response?.data?.detail || "Signup failed");
+      setMessage("");
     }
   };
 

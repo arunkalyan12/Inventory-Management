@@ -17,50 +17,62 @@ client = TestClient(app)
 # ---- Setup test database ----
 @pytest.fixture(autouse=True)
 def setup_test_db():
-    # Connect to MongoDB test database
     test_client = MongoClient("mongodb://localhost:27017")
     test_db = test_client["test_inventory_db_auth"]
-
-    # Override USERS_COLLECTION to use test database
     mq.USERS_COLLECTION = test_db["users"]
-    mq.USERS_COLLECTION.delete_many({})  # Clean before test
-
+    mq.USERS_COLLECTION.delete_many({})
     yield
-
-    # Clean up after test
     mq.USERS_COLLECTION.delete_many({})
 
 
 # ---- Tests ----
+
+
 def test_signup_success():
     response = client.post(
-        "/signup", json={"email": "testuser@example.com", "password": "strongpassword"}
+        "/signup",
+        json={
+            "full_name": "Test User",
+            "email": "testuser@example.com",
+            "password": "strongpassword",
+        },
     )
     assert response.status_code == 200
     data = response.json()
     assert "user_id" in data
-    assert data["message"] == "User created successfully"
+    assert data["message"] == "Signup successful"
 
 
 def test_signup_duplicate_email():
-    # First signup
     client.post(
-        "/signup", json={"email": "testuser@example.com", "password": "strongpassword"}
+        "/signup",
+        json={
+            "full_name": "Test User",
+            "email": "testuser@example.com",
+            "password": "strongpassword",
+        },
     )
-    # Second signup with same email
     response = client.post(
-        "/signup", json={"email": "testuser@example.com", "password": "anotherpassword"}
+        "/signup",
+        json={
+            "full_name": "Another User",
+            "email": "testuser@example.com",
+            "password": "anotherpassword",
+        },
     )
     assert response.status_code == 400
     assert response.json()["detail"] == "Email already registered"
 
 
 def test_login_success():
-    # Signup first
     client.post(
-        "/signup", json={"email": "loginuser@example.com", "password": "loginpass"}
+        "/signup",
+        json={
+            "full_name": "Login User",
+            "email": "loginuser@example.com",
+            "password": "loginpass",
+        },
     )
-    # Login
     response = client.post(
         "/login", json={"email": "loginuser@example.com", "password": "loginpass"}
     )
@@ -71,11 +83,14 @@ def test_login_success():
 
 
 def test_login_wrong_password():
-    # Signup first
     client.post(
-        "/signup", json={"email": "wrongpass@example.com", "password": "rightpass"}
+        "/signup",
+        json={
+            "full_name": "Wrong Pass User",
+            "email": "wrongpass@example.com",
+            "password": "rightpass",
+        },
     )
-    # Attempt login with wrong password
     response = client.post(
         "/login", json={"email": "wrongpass@example.com", "password": "wrongpass"}
     )
@@ -89,3 +104,26 @@ def test_login_nonexistent_user():
     )
     assert response.status_code == 401
     assert response.json()["detail"] == "Invalid email or password"
+
+
+def test_signup_full_name():
+    """Test that the user is created with the correct full name."""
+    response = client.post(
+        "/signup",
+        json={
+            "full_name": "Full Name User",
+            "email": "fullnameuser@example.com",
+            "password": "securepass",
+        },
+    )
+    assert response.status_code == 200
+    data = response.json()
+    assert "user_id" in data
+    assert data["message"] == "Signup successful"
+
+    user_id = data["user_id"]
+    user = mq.USERS_COLLECTION.find_one({"_id": mq.ObjectId(user_id)})
+    assert user is not None
+    assert (
+        user["full_name"] == "Full Name User"
+    ), f"Expected full_name to be 'Full Name User', got {user['full_name']}"

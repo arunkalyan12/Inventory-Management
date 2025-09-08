@@ -1,23 +1,44 @@
-import axios from 'axios';
-
 const API_BASE_URL = "http://localhost:8000/api"; // Adjust if backend is on another port
 
-export const signup = async (email, password) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/signup`, { email, password });
-        return response.data;
-    } catch (error) {
-        console.error("Signup error:", error.response?.data || error.message);
-        throw error;
-    }
-};
+// Signup function
+export async function signup(fullName, email, password) {
+  const response = await fetch(`${API_BASE_URL}/signup`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      full_name: fullName,
+      email: email,
+      password: password,
+    }),
+  });
 
-export const login = async (email, password) => {
-    try {
-        const response = await axios.post(`${API_BASE_URL}/login`, { email, password });
-        return response.data;
-    } catch (error) {
-        console.error("Login error:", error.response?.data || error.message);
-        throw error;
-    }
-};
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Signup failed");
+  }
+
+  return await response.json();
+}
+
+// Login function
+export async function login(email, password) {
+  const response = await fetch(`${API_BASE_URL}/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.detail || "Login failed");
+  }
+
+  return await response.json();
+}
