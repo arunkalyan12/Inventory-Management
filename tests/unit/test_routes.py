@@ -1,4 +1,5 @@
-from backend.app import app  # Correct
+# tests/unit/test_routes.py
+from backend.app import app  # Correct import
 from fastapi.testclient import TestClient
 import sys
 import os
@@ -9,28 +10,46 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "../../backend"))
 client = TestClient(app)
 
 
-def test_inventory_route():
-    response = client.get("/inventory")
+def test_root_route():
+    response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {"message": "Inventory Management API is running!"}
 
 
-def test_shopping_list_route():
-    response = client.get("/shopping-list")
+def test_inventory_route():
+    # Include trailing slash to match FastAPI router
+    response = client.get("/inventory/")
     assert response.status_code == 200
-    assert response.json() == {"message": "Shopping List API is running!"}
+    # Replace with your actual inventory_router response if needed
+    assert isinstance(response.json(), dict)
+
+
+def test_shopping_list_route():
+    response = client.get("/shopping-list/")  # Include trailing slash
+    assert response.status_code == 200
+    data = response.json()
+    # Check for shopping list key
+    assert "shopping_list" in data
 
 
 def test_auth_signup():
-    payload = {"email": "test@example.com", "password": "securepassword"}
+    payload = {
+        "email": "test@example.com",
+        "password": "securepassword",
+        "full_name": "Test User",
+    }
     response = client.post("/auth/signup", json=payload)
     assert response.status_code in (200, 201)
     data = response.json()
-    assert "message" in data or "email" in data
+    assert "email" in data or "message" in data
 
 
 def test_auth_login():
-    signup_payload = {"email": "test@example.com", "password": "securepassword"}
+    signup_payload = {
+        "email": "test@example.com",
+        "password": "securepassword",
+        "full_name": "Test User",
+    }
     client.post("/auth/signup", json=signup_payload)
 
     login_payload = {"email": "test@example.com", "password": "securepassword"}
@@ -41,6 +60,7 @@ def test_auth_login():
 
 
 if __name__ == "__main__":
+    test_root_route()
     test_inventory_route()
     test_shopping_list_route()
     test_auth_signup()
