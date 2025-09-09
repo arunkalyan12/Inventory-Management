@@ -3,14 +3,14 @@
 import pytest
 from fastapi.testclient import TestClient
 from pymongo import MongoClient
-from components.inventory_management.api.auth import router as auth_router
+from bson import ObjectId
 from fastapi import FastAPI
+from components.inventory_management.api.auth import router as auth_router
 from components.inventory_management.db import mongo_queries as mq
 
-# Create FastAPI app for testing
+# --- Create FastAPI app for testing ---
 app = FastAPI()
 app.include_router(auth_router)
-
 client = TestClient(app)
 
 
@@ -107,7 +107,7 @@ def test_login_nonexistent_user():
 
 
 def test_signup_full_name():
-    """Test that the user is created with the correct full name."""
+    """Ensure user is created with the correct full name."""
     response = client.post(
         "/signup",
         json={
@@ -122,7 +122,7 @@ def test_signup_full_name():
     assert data["message"] == "Signup successful"
 
     user_id = data["user_id"]
-    user = mq.USERS_COLLECTION.find_one({"_id": mq.ObjectId(user_id)})
+    user = mq.USERS_COLLECTION.find_one({"_id": ObjectId(user_id)})
     assert user is not None
     assert (
         user["full_name"] == "Full Name User"

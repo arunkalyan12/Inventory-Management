@@ -1,27 +1,100 @@
-# Version control
-.git
-.gitignore
-
-# Python cache
+# ------------------------
+# Python cache files
+# ------------------------
 __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
 *.egg-info/
 
-# Virtual envs
+# Environment / virtualenvs
+.env
+.env.*
 .venv/
 venv/
+components/inventory_management/inv_management/
+components/computer_vision/comp_vision/
+components/monitoring_tracing/monitor_trace/
+components/notification_service/motification/
+pip-wheel-metadata/
 
-# Node / React dependencies
+# ------------------------
+# Data and model files
+# ------------------------
+components/computer_vision/data/
+components/computer_vision/mlruns/
+components/computer_vision/mlartifacts/
+components/computer_vision/model/runs/
+components/computer_vision/model/*.pt
+mlruns/
+*.pth
+*.onnx
+*.ckpt
+*.joblib
+*.h5
+*.tflite
+
+# ------------------------
+# Node / React
+# ------------------------
 node_modules/
+build/
+dist/
 
-# Logs / Temp files
+# ------------------------
+# Logs / temp / PID
+# ------------------------
 *.log
 logs/
+data/
 tmp/
 temp/
+*.pid
 
-# OS generated files
+# ------------------------
+# Coverage / test reports
+# ------------------------
+htmlcov/
+.coverage
+coverage.xml
+.pytest_cache/
+junit.xml
+
+# ------------------------
+# Docker & CI/CD
+# ------------------------
+**/Dockerfile~
+**/.dockerignore
+docker-compose.override.yml
+.docker/
+**/build-artifacts/
+**/coverage-report/
+
+# ------------------------
+# IDE / editor files
+# ------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ------------------------
+# OS generated
+# ------------------------
 .DS_Store
 Thumbs.db
+
+# ------------------------
+# Project docs & generated files
+# ------------------------
+folder_structure.md
+*.drawio
+*.plantuml
+*.mermaid
+docs/generated/
+
+# ------------------------
+# Jupyter notebooks
+# ------------------------
+*.ipynb
+*.ipynb_checkpoints/

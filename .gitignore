@@ -10,11 +10,11 @@ venv/
 pip-wheel-metadata/
 
 # Data and model files
-components/computer_vision/data/
-components/computer_vision/mlruns/
-components/computer_vision/mlartifacts/
-components/computer_vision/model/runs/
-components/computer_vision/model/*.pt
+backend/computer_vision/data/
+backend/computer_vision/mlruns/
+backend/computer_vision/mlartifacts/
+backend/computer_vision/model/runs/
+backend/computer_vision/model/*.pt
 mlruns/
 *.pth
 *.onnx
@@ -24,10 +24,10 @@ mlruns/
 *.tflite   # TensorFlow Lite models
 
 # Virtual environment
-components/computer_vision/comp_vision/
-components/inventory_management/inv_management/
-components/monitoring_tracing/monitor_trace/
-components/notification_service/motification/
+backend/computer_vision/comp_vision/
+backend/inventory_management/inv_management/
+backend/monitoring_tracing/monitor_trace/
+backend/notification_service/motification/
 
 # Node / React
 node_modules/

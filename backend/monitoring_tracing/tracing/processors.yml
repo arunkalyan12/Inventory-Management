@@ -1,0 +1,25 @@
+processors:
+  batch:
+    timeout: 5s
+    send_batch_size: 1000
+
+  memory_limiter:
+    # Prevent OOM by limiting collector memory
+    check_interval: 1s
+    limit_mib: 400
+    spike_limit_mib: 100
+
+  resource:
+    attributes:
+      - key: service.namespace
+        value: "inventory_system"
+        action: insert
+      - key: deployment.environment
+        from_attribute: env
+        action: upsert
+
+  attributes/add_client_info:
+    actions:
+      - key: client.ip
+        action: insert
+        from_context: http.client_ip
