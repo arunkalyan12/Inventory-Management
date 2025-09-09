@@ -26,7 +26,7 @@ app.add_middleware(
 # ---- Include Routers ----
 app.include_router(auth_router, prefix="/auth", tags=["Auth"])
 app.include_router(inventory_router, prefix="/inventory", tags=["Inventory"])
-app.include_router(shopping_router, prefix="/shopping", tags=["Shopping List"])
+app.include_router(shopping_router, prefix="/shopping-list", tags=["Shopping List"])
 
 
 # ---- Root Endpoint ----

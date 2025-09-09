@@ -1,12 +1,10 @@
-from app import app
+from backend.app import app  # Correct
 from fastapi.testclient import TestClient
 import sys
 import os
 
 # Add the backend folder to sys.path so Python can find the app module
 sys.path.append(os.path.join(os.path.dirname(__file__), "../../backend"))
-
-# import pytest
 
 client = TestClient(app)
 
@@ -40,3 +38,11 @@ def test_auth_login():
     assert response.status_code == 200
     data = response.json()
     assert "token" in data or "message" in data
+
+
+if __name__ == "__main__":
+    test_inventory_route()
+    test_shopping_list_route()
+    test_auth_signup()
+    test_auth_login()
+    print("All tests passed!")
