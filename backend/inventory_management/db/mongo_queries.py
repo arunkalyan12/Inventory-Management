@@ -121,6 +121,56 @@ def item_exists(item_id: str) -> bool:
     return ITEMS_COLLECTION.count_documents({"_id": ObjectId(item_id)}, limit=1) > 0
 
 
+# -------------------- Batch Inventory Insert --------------------
+def add_inventory_batch(items: list[dict], user_id: str = None) -> list[dict]:
+    """
+    Inserts multiple inventory items at once.
+
+    Args:
+        items (list[dict]): List of inventory items. Each item should have keys:
+            - name (str)
+            - quantity (int)
+            - category_id (str, optional)
+            - confidence (float, optional)
+        user_id (str, optional): User ID to associate items with
+
+    Returns:
+        List[dict]: Inserted items with '_id' included
+    """
+    if not items:
+        logger.info("No items provided for batch insert.")
+        return []
+
+    now = datetime.utcnow()
+    items_to_insert = []
+
+    for item in items:
+        item_doc = {
+            "name": item.get("name"),
+            "quantity": item.get("quantity", 1),
+            "category_id": item.get("category_id"),
+            "created_at": now,
+            "updated_at": now,
+        }
+        if user_id:
+            item_doc["user_id"] = user_id
+        # Optional fields from CV predictions
+        if "confidence" in item:
+            item_doc["confidence"] = item["confidence"]
+        items_to_insert.append(item_doc)
+
+    result = ITEMS_COLLECTION.insert_many(items_to_insert)
+    logger.info(f"Inserted {len(result.inserted_ids)} items in batch.")
+
+    # Return inserted items with MongoDB _id
+    inserted_items = []
+    for item_doc, _id in zip(items_to_insert, result.inserted_ids):
+        item_doc["_id"] = str(_id)
+        inserted_items.append(item_doc)
+
+    return inserted_items
+
+
 # -------------------- Categories --------------------
 def insert_category(category: Category) -> str:
     result = CATEGORIES_COLLECTION.insert_one(category.to_dict())
@@ -201,3 +251,13 @@ def update_shopping_item(item_id: str, update_data: dict) -> Optional[ShoppingLi
 def delete_shopping_item(item_id: str) -> bool:
     result = SHOPPING_LIST_COLLECTION.delete_one({"_id": ObjectId(item_id)})
     return result.deleted_count > 0
+
+
+def clear_inventory():
+    """
+    Deletes all documents in the inventory collection.
+    Useful for testing or resetting the DB.
+    """
+    result = ITEMS_COLLECTION.delete_many({})
+    logger.info(f"Cleared {result.deleted_count} items from inventory.")
+    return result.deleted_count
