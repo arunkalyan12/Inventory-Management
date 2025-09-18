@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-config
+data:
+  ENV: "dev"
+  LOG_LEVEL: "INFO"
+  DB_HOST: "mongo"
+  DB_PORT: "27017"
+  DB_NAME: "inventory_db"
+  DB_USER: "admin"
+  DB_PASS: "password123"
+  IM_API_HOST: "0.0.0.0"
+  IM_API_PORT: "8000"
+  MODEL_PATH: "/app/model/model_weights.pt"
+  TRAIN_DATA_PATH: "/app/data/train"
+  VALID_DATA_PATH: "/app/data/valid"
+  LOG_FILE_PATH: "/app/logs/inventory.log"
+  EVENT_QUEUE_HOST: "rabbitmq"
+  EVENT_QUEUE_PORT: "5672"
+  EVENT_QUEUE_NAME: "inventory_events"
+  CV_API_URL: "http://backend:8000/predict"
+  PROMETHEUS_HOST: "prometheus"
+  PROMETHEUS_PORT: "9090"
+  OTEL_COLLECTOR_URL: "http://otel-collector:4317"

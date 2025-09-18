@@ -1,0 +1,180 @@
+# -------------------------------
+# ConfigMap for OTEL Collector
+# -------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-config
+data:
+  otel_config.yml: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+
+    exporters:
+      jaeger:
+        endpoint: "jaeger:14250"
+        tls:
+          insecure: true
+      prometheus:
+        endpoint: "0.0.0.0:9464"
+      logging:
+        loglevel: info
+
+    extensions:
+      health_check:
+      pprof:
+      zpages:
+
+    service:
+      extensions: [health_check, pprof, zpages]
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [jaeger, logging]
+        metrics:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [prometheus, logging]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [logging]
+
+  processors.yml: |
+    processors:
+      batch:
+        timeout: 5s
+        send_batch_size: 1000
+      memory_limiter:
+        check_interval: 1s
+        limit_mib: 400
+        spike_limit_mib: 100
+      resource:
+        attributes:
+          - key: service.namespace
+            value: "inventory_system"
+            action: insert
+          - key: deployment.environment
+            from_attribute: env
+            action: upsert
+      attributes/add_client_info:
+        actions:
+          - key: client.ip
+            action: insert
+            from_context: http.client_ip
+
+---
+# -------------------------------
+# OTEL Collector Deployment
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      containers:
+        - name: otel-collector
+          image: otel/opentelemetry-collector:latest
+          args: ["--config=/etc/otel/otel_config.yml"]
+          ports:
+            - containerPort: 4317  # OTLP gRPC
+            - containerPort: 4318  # OTLP HTTP
+            - containerPort: 9464  # Prometheus metrics
+          volumeMounts:
+            - name: otel-config-volume
+              mountPath: /etc/otel
+      volumes:
+        - name: otel-config-volume
+          configMap:
+            name: otel-config
+
+---
+# -------------------------------
+# OTEL Collector Service
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+spec:
+  selector:
+    app: otel-collector
+  ports:
+    - name: otlp-grpc
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
+    - name: otlp-http
+      protocol: TCP
+      port: 4318
+      targetPort: 4318
+    - name: prometheus-metrics
+      protocol: TCP
+      port: 9464
+      targetPort: 9464
+  type: ClusterIP
+
+---
+# -------------------------------
+# Jaeger Deployment
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+    spec:
+      containers:
+        - name: jaeger
+          image: jaegertracing/all-in-one:1.48
+          ports:
+            - containerPort: 16686  # Jaeger UI
+            - containerPort: 14250  # gRPC for OTEL
+            - containerPort: 14268  # HTTP for OTEL
+
+---
+# -------------------------------
+# Jaeger Service
+# -------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+spec:
+  selector:
+    app: jaeger
+  ports:
+    - name: ui
+      protocol: TCP
+      port: 16686
+      targetPort: 16686
+    - name: otlp-grpc
+      protocol: TCP
+      port: 14250
+      targetPort: 14250
+    - name: otlp-http
+      protocol: TCP
+      port: 14268
+      targetPort: 14268
+  type: ClusterIP

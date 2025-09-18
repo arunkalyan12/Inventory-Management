@@ -1,0 +1,256 @@
+# -------------------------------
+# 1️⃣ ConfigMap for Prometheus + Alerts
+# -------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      evaluation_interval: 15s
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets: []
+    rule_files:
+      - "alerts.yml"
+    scrape_configs:
+      - job_name: "prometheus"
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: "computer_vision"
+        static_configs:
+          - targets: ["computer-vision:8000"]
+        metrics_path: /metrics
+      - job_name: "inventory_management"
+        static_configs:
+          - targets: ["inventory-management:8000"]
+        metrics_path: /metrics
+      - job_name: "notification_service"
+        static_configs:
+          - targets: ["notification-service:8000"]
+        metrics_path: /metrics
+      - job_name: "custom_exporters"
+        static_configs:
+          - targets: ["mq-metrics:9100", "service-metrics:9200"]
+  alerts.yml: |
+    groups:
+      - name: microservice-alerts
+        interval: 30s
+        rules:
+          - alert: ServiceDown
+            expr: up == 0
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Service {{ $labels.job }} is down"
+              description: "{{ $labels.job }} has been unreachable for more than 1 minute."
+          - alert: HighErrorRate
+            expr: rate(http_requests_total{status=~\"5..\"}[5m]) > 0.05
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High error rate on {{ $labels.job }}"
+              description: "More than 5% of requests failed in the last 5 minutes."
+      - name: resource-alerts
+        interval: 30s
+        rules:
+          - alert: HighCPUUsage
+            expr: sum(rate(container_cpu_usage_seconds_total[5m])) by (pod) > 0.8
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High CPU usage on {{ $labels.pod }}"
+              description: "Pod {{ $labels.pod }} is using >80% of CPU for more than 2 minutes."
+          - alert: HighMemoryUsage
+            expr: container_memory_usage_bytes / container_spec_memory_limit_bytes > 0.8
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High memory usage on {{ $labels.pod }}"
+              description: "Pod {{ $labels.pod }} is using >80% of memory limit."
+
+---
+# -------------------------------
+# 2️⃣ Prometheus Deployment & Service
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          args:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config-volume
+              mountPath: /etc/prometheus
+      volumes:
+        - name: prometheus-config-volume
+          configMap:
+            name: prometheus-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+spec:
+  selector:
+    app: prometheus
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 9090
+  type: ClusterIP
+
+---
+# -------------------------------
+# 3️⃣ Grafana Deployment & Service
+# -------------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-datasources
+data:
+  datasources.yml: |
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus:9090
+        isDefault: true
+        editable: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: grafana/grafana:latest
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: grafana-datasources
+              mountPath: /etc/grafana/provisioning/datasources
+      volumes:
+        - name: grafana-datasources
+          configMap:
+            name: grafana-datasources
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+spec:
+  selector:
+    app: grafana
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP
+
+---
+# -------------------------------
+# 4️⃣ MQ Metrics Exporter Deployment & Service
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mq-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mq-metrics
+  template:
+    metadata:
+      labels:
+        app: mq-metrics
+    spec:
+      containers:
+        - name: mq-metrics
+          image: your-dockerhub-username/mq-metrics:latest
+          ports:
+            - containerPort: 9100
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mq-metrics
+spec:
+  selector:
+    app: mq-metrics
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100
+  type: ClusterIP
+
+---
+# -------------------------------
+# 5️⃣ Service Metrics Exporter Deployment & Service
+# -------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-metrics
+  template:
+    metadata:
+      labels:
+        app: service-metrics
+    spec:
+      containers:
+        - name: service-metrics
+          image: your-dockerhub-username/service-metrics:latest
+          ports:
+            - containerPort: 9200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-metrics
+spec:
+  selector:
+    app: service-metrics
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+  type: ClusterIP
